@@ -1,0 +1,176 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Health Practices",
+    "description": "Entity ==> Practices and Concepts",
+    "version": "0.1"
+  },
+  "tags": [
+    {
+      "name": "HealthPractice"
+    }
+  ],
+  "paths": {
+    "/reintegros/practices/{code}": {
+      "get": {
+        "tags": [
+          "HealthPracticeByCode"
+        ],
+        "summary": "Returned ok a practice or a list of them with their asociates concepts",
+        "parameters": [
+          {
+            "name": "code",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "420101"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returned ok a practice or a list of them with their asociates concepts",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/healthPractice"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "BAD REQUEST - Formato del codigo invalido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/reintegros/practices/{description}": {
+      "get": {
+        "tags": [
+          "HealthPracticebyDescription"
+        ],
+        "summary": "Return a list of practice and concept with a description of input",
+        "parameters": [
+          {
+            "name": "description",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "CONSULTA"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returned ok a practice or a list of them with their asociates concepts",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/healthPractice"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "BAD REQUEST - Formato del codigo invalido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "header": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "example": "420101",
+            "pattern": "^[0-9]"
+          },
+          "name": {
+            "type": "string",
+            "example": "CONS. CONSULTORIO",
+            "pattern": "^[0-9a-z ,.'-°]+$"
+          },
+          "description": {
+            "type": "string",
+            "example": "CONSULTA EN CONSULTORIO - AMBULATORIO",
+            "pattern": "^[0-9a-z ,.'-°]+$"
+          },
+          "context": {
+            "type": "string",
+            "example": "AMBULATORIO",
+            "pattern": "^[0-9a-z ,.'-°]+$"
+          },
+          "health_practice_concepts": {
+            "$ref": "#/components/schemas/details"
+          }
+        }
+      },
+      "details": {
+        "type": "object",
+        "properties": {
+          "concept_code": {
+            "type": "string",
+            "example": "1",
+            "pattern": "^[1-5]"
+          },
+          "concept_description": {
+            "type": "string",
+            "example": "ESPECIALISTA",
+            "pattern": "^[0-9a-z ,.'-°]+$"
+          },
+          "health_practice_status": {
+            "type": "string",
+            "example": "A"
+          }
+        }
+      },
+      "healthPractice": {
+        "type": "object",
+        "properties": {
+          "response_get_health_practices": {
+            "$ref": "#/components/schemas/header"
+          }
+        }
+      }
+    }
+  }
+}
