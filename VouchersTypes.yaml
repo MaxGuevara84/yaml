@@ -1,0 +1,163 @@
+---
+openapi: 3.0.3
+info:
+  title: API Osde
+  description: Tipos de comprobantes
+  version: "0.1"
+tags:
+- name: VouchersTypes
+paths:
+  /voucher/type:
+    get:
+      tags:
+      - VouchersTypes
+      summary: Retorna un listado con todos los tipos de comprobantes
+      operationId: findAll
+      responses:
+        "200":
+          description: Muestra la lista de tipos de comprobantes correctamente.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/voucher_type'
+  /voucher/type/code/{code}:
+    get:
+      tags:
+      - VouchersTypes
+      summary: Retorna un tipo de comprobante segun el codigo ingresado
+      operationId: findbyCode
+      parameters:
+      - name: code
+        in: path
+        required: true
+        schema:
+          type: string
+        example: FA
+      responses:
+        "200":
+          description: Muestra el tipo de comprobante asociado al codigo ingresado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/voucher_type'
+        "400":
+          description: BAD REQUEST - Formato del codigo invalido
+          content:
+            application/json:
+              schema:
+                type: object
+        "404":
+          description: No se encontró un tipo de comprobante con ese codigo
+          content:
+            application/json:
+              schema:
+                type: object
+components:
+  schemas:
+    business_name:
+      type: object
+      properties:
+        visible:
+          type: string
+        obligatory:
+          type: string
+    cae_cai:
+      type: object
+      properties:
+        visible:
+          type: string
+        obligatory:
+          type: string
+    country_code:
+      type: object
+      properties:
+        visible:
+          type: string
+        obligatory:
+          type: string
+    cuit:
+      type: object
+      properties:
+        visible:
+          type: string
+        obligatory:
+          type: string
+    date_of_issue:
+      type: object
+      properties:
+        visible:
+          type: string
+        obligatory:
+          type: string
+    expiration_date:
+      type: object
+      properties:
+        visible:
+          type: string
+        obligatory:
+          type: string
+    juridic_personery:
+      type: object
+      properties:
+        visible:
+          type: string
+        obligatory:
+          type: string
+    number:
+      type: object
+      properties:
+        visible:
+          type: string
+        obligatory:
+          type: string
+    point_of_sale:
+      type: object
+      properties:
+        visible:
+          type: string
+        obligatory:
+          type: string
+    voucher_type:
+      required:
+      - code
+      - name
+      - afip
+      - charge_amount
+      - cae_cai
+      - juridic_personery
+      - country_code
+      - cuit
+      - number
+      - date_of_issue
+      - expiration_date
+      - point_of_sale
+      type: object
+      properties:
+        code:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        afip:
+          type: string
+        charge_amount:
+          type: string
+        cae_cai:
+          $ref: '#/components/schemas/cae_cai'
+        juridic_personery:
+          $ref: '#/components/schemas/juridic_personery'
+        country_code:
+          $ref: '#/components/schemas/country_code'
+        cuit:
+          $ref: '#/components/schemas/cuit'
+        number:
+          $ref: '#/components/schemas/number'
+        business_name:
+          $ref: '#/components/schemas/business_name'
+        date_of_issue:
+          $ref: '#/components/schemas/date_of_issue'
+        expiration_date:
+          $ref: '#/components/schemas/expiration_date'
+        point_of_sale:
+          $ref: '#/components/schemas/point_of_sale'
